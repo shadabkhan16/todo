@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleTodo, removeTodo, updateTodo } from "../redux/todoSlice";
 import { GoPencil } from "react-icons/go";

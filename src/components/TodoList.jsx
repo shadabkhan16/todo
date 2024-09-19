@@ -63,8 +63,6 @@ const TodoList = () => {
                     </button>
                 </div>
             </div>
-
-
             <AddTodo />
 
         </div >

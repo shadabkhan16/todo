@@ -2,22 +2,18 @@ import { useState } from 'react';
 import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { BsMoon } from "react-icons/bs";
 import AddTodo from './AddTodo';
+import TodoItem from './TodoItem';
+import { useSelector } from 'react-redux';
+import notfound from "../assets/notfound.png"
 
 const TodoList = () => {
     const [task, setTask] = useState('');
-    const [tasks, setTasks] = useState([]);
+    const [serachTask, setSearchTasks] = useState([]);
+    const notesList = useSelector(state => state.todo.todo)
 
-    const addTask = () => {
-        if (task.trim()) {
-            setTasks([...tasks, task]);
-            setTask('');
-        }
-    };
 
-    const deleteTask = (index) => {
-        const newTasks = tasks.filter((_, i) => i !== index);
-        setTasks(newTasks);
-    };
+
+
     const [selectedType, setSelectedType] = useState('All');
 
     const handleChange = (event) => {
@@ -64,7 +60,15 @@ const TodoList = () => {
                 </div>
             </div>
             <AddTodo />
-
+            <div>
+                {notesList.length > 0 ? (
+                    notesList.map((note) => <TodoItem key={note.id} note={note} />)
+                ) : (
+                    <span>
+                        <img src={notfound} alt="" />
+                    </span>
+                )}
+            </div>
         </div >
     );
 };

@@ -1,10 +1,13 @@
 import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../redux/todoSlice";
 
 const AddTodo = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [newNote, setNewNote] = useState("")
-    const [notes, setNotes] = useState([])
+
+    const dispatch = useDispatch()
 
 
     const togglePopup = () => {
@@ -13,11 +16,9 @@ const AddTodo = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Handle form submission logic here
-        console.log("before", newNote)
-        console.log(notes)
-        setNotes([...notes, newNote])
-        console.log(notes)
+
+        dispatch(addTodo(newNote))
+        // console.log(notes)
         togglePopup(); // Close the popup after submission
 
     };

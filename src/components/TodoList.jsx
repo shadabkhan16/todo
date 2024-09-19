@@ -3,14 +3,21 @@ import { PiMagnifyingGlassBold } from "react-icons/pi";
 import { BsMoon } from "react-icons/bs";
 import AddTodo from './AddTodo';
 import TodoItem from './TodoItem';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import notfound from "../assets/notfound.png"
+import { setSearchQuery } from '../redux/todoSlice';
 
 const TodoList = () => {
     const [task, setTask] = useState('');
-    const [searchTask, setSearchTask] = useState()
+
     const notesList = useSelector(state => state.todo.todo)
     const [selectedType, setSelectedType] = useState('All');
+    // const [todoFilter , setTodoFilter] = useState(notesList)
+    const dispatch = useDispatch()
+    const notes = useSelector((state) => state.todo.searchQuery)
+    const searchQuery = useSelector((state) => state.todo.searchQuery)
+
+
 
     const handleChange = (event) => {
         setSelectedType(event.target.value);
@@ -19,9 +26,11 @@ const TodoList = () => {
 
     const handleSearch = (e) => {
         e.preventDefault()
-        setSearchTask(task)
+        dispatch(setSearchQuery(task))
     }
-
+    const filteredTodos = notesList.filter((todo) =>
+        todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
 
     return (
@@ -49,7 +58,7 @@ const TodoList = () => {
                             name="todo"
                             value={selectedType}
                             onChange={handleChange}
-                            className="w-full px-4  py-2 ml-2  bg-blue-800  border rounded-md shadow-sm  text-white ">
+                            className="w-full px-4  py-2 ml-2  bg-blue-800   rounded-md shadow-sm  text-white ">
                             <option value="All">All</option>
                             <option value="Completed">Completed</option>
                             <option value="Incomplete">Incomplete</option>
@@ -63,8 +72,8 @@ const TodoList = () => {
             </div>
             <AddTodo />
             <div>
-                {notesList.length > 0 ? (
-                    notesList.map((note) => <TodoItem key={note.id} note={note} />)
+                {filteredTodos.length > 0 ? (
+                    filteredTodos.map((note) => <TodoItem key={note.id} note={note} />)
                 ) : (
                     <span className="flex items-center justify-center">
                         <img src={notfound} alt="" />

@@ -15,6 +15,7 @@ const initialState = {
       isDone: false,
     },
   ],
+  searchQuery: "",
 };
 
 export const todoSlice = createSlice({
@@ -45,10 +46,13 @@ export const todoSlice = createSlice({
         todo.title = title; // Update the title of the todo
       }
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
   },
 });
 
-export const { addTodo, removeTodo, toggleTodo, updateTodo } =
+export const { addTodo, removeTodo, toggleTodo, updateTodo, setSearchQuery } =
   todoSlice.actions;
 
 export default todoSlice.reducer;

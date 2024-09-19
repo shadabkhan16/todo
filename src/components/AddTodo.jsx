@@ -18,7 +18,7 @@ const AddTodo = () => {
         event.preventDefault();
 
         dispatch(addTodo(newNote))
-        // console.log(notes)
+
         togglePopup(); // Close the popup after submission
 
     };

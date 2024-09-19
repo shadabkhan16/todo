@@ -30,14 +30,7 @@ const TodoList = () => {
         dispatch(setSearchQuery(task))
         console.log("clicked")
     }
-    // const filteredTodos = notesList.filter((todo) =>
-    //     todo.title.toLowerCase().includes(searchQuery.toLowerCase())
-    //         .filter((todo) => {
-    //             if (dropDownFilter === 'Completed') return todo.isDone;
-    //             if (dropDownFilter === 'Incomplete') return !todo.isDone;
-    //             return true; // 'all' filter
-    //         })
-    // );
+
 
 
     const filteredTodos = notesList

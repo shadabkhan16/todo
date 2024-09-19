@@ -8,18 +8,21 @@ import notfound from "../assets/notfound.png"
 
 const TodoList = () => {
     const [task, setTask] = useState('');
-    const [serachTask, setSearchTasks] = useState([]);
+    const [searchTask, setSearchTask] = useState()
     const notesList = useSelector(state => state.todo.todo)
-
-
-
-
     const [selectedType, setSelectedType] = useState('All');
 
     const handleChange = (event) => {
         setSelectedType(event.target.value);
         console.log("Selected type:", event.target.value);
     };
+
+    const handleSearch = (e) => {
+        e.preventDefault()
+        setSearchTask(task)
+    }
+
+
 
     return (
         <div className="  min-h-screen bg-white p-6 rounded-lg shadow-lg w-3/4 mx-auto relative">
@@ -30,12 +33,11 @@ const TodoList = () => {
                         type="text"
                         className="w-full px-3 py-2 border border-solid border-r-0 rounded-l-md focus:outline-none"
                         placeholder="Search note ...."
-                        value={task}
                         onChange={(e) => setTask(e.target.value)}
 
                     />
                     <button
-
+                        onClick={handleSearch}
                         className="px-3 py-3  bg-white border border-solid border-l-0  rounded-r-md"
                     >
                         <PiMagnifyingGlassBold />
@@ -64,7 +66,7 @@ const TodoList = () => {
                 {notesList.length > 0 ? (
                     notesList.map((note) => <TodoItem key={note.id} note={note} />)
                 ) : (
-                    <span>
+                    <span className="flex items-center justify-center">
                         <img src={notfound} alt="" />
                     </span>
                 )}

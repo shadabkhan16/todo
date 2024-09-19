@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleTodo, removeTodo, updateTodo } from "../redux/todoSlice";
 import { GoPencil } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
 
 const TodoItem = ({ note }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -83,7 +84,7 @@ const TodoItem = ({ note }) => {
                             onClick={handleDelete}
                             className="px-2 py-1 bg-blue-500 text-white rounded-md border border-blue-800 hover:bg-blue-800"
                         >
-                            Delete
+                            <MdDelete />
                         </button>
                     </>
                 )}

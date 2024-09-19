@@ -16,6 +16,7 @@ const initialState = {
     },
   ],
   searchQuery: "",
+  dropDownFilter: "All",
 };
 
 export const todoSlice = createSlice({
@@ -49,10 +50,19 @@ export const todoSlice = createSlice({
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
     },
+    setFilter: (state, action) => {
+      state.dropDownFilter = action.payload;
+    },
   },
 });
 
-export const { addTodo, removeTodo, toggleTodo, updateTodo, setSearchQuery } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  toggleTodo,
+  updateTodo,
+  setSearchQuery,
+  setFilter,
+} = todoSlice.actions;
 
 export default todoSlice.reducer;

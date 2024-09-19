@@ -5,32 +5,59 @@ import AddTodo from './AddTodo';
 import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
 import notfound from "../assets/notfound.png"
-import { setSearchQuery } from '../redux/todoSlice';
+import { setSearchQuery, setFilter } from '../redux/todoSlice';
 
 const TodoList = () => {
     const [task, setTask] = useState('');
 
     const notesList = useSelector(state => state.todo.todo)
     const [selectedType, setSelectedType] = useState('All');
-    // const [todoFilter , setTodoFilter] = useState(notesList)
     const dispatch = useDispatch()
-    const notes = useSelector((state) => state.todo.searchQuery)
+
     const searchQuery = useSelector((state) => state.todo.searchQuery)
+    const dropDownFilter = useSelector((state) => state.todo.dropDownFilter)
+
 
 
 
     const handleChange = (event) => {
         setSelectedType(event.target.value);
-        console.log("Selected type:", event.target.value);
+        dispatch(setFilter(event.target.value));
     };
 
     const handleSearch = (e) => {
         e.preventDefault()
         dispatch(setSearchQuery(task))
+        console.log("clicked")
     }
-    const filteredTodos = notesList.filter((todo) =>
-        todo.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    // const filteredTodos = notesList.filter((todo) =>
+    //     todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+    //         .filter((todo) => {
+    //             if (dropDownFilter === 'Completed') return todo.isDone;
+    //             if (dropDownFilter === 'Incomplete') return !todo.isDone;
+    //             return true; // 'all' filter
+    //         })
+    // );
+
+
+    const filteredTodos = notesList
+        .filter((todo) => {
+            // Check if the task is defined before calling toLowerCase
+            if (todo.title) {
+                return todo.title.toLowerCase().includes(searchQuery.toLowerCase());
+            }
+            return false;
+        })
+        .filter((todo) => {
+            if (dropDownFilter === "Completed") return todo.isDone;
+            if (dropDownFilter === "Incomplete") return !todo.isDone;
+            return true; // 'all' filter
+        });
+
+
+
+
+
 
 
     return (

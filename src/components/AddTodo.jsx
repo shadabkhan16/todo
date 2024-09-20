@@ -1,6 +1,6 @@
 import { FaPlus } from "react-icons/fa6";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTodo } from "../redux/todoSlice";
 
 const AddTodo = () => {
@@ -8,6 +8,7 @@ const AddTodo = () => {
     const [newNote, setNewNote] = useState("")
 
     const dispatch = useDispatch()
+    const theme = useSelector(state => state.theme.theme)
 
 
     const togglePopup = () => {
@@ -34,8 +35,8 @@ const AddTodo = () => {
             </button>
             {isOpen && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-                        <h2 className="text-xl font-semibold mb-4 text-center">NEW NOTE</h2>
+                    <div className={`p-6 rounded-lg shadow-lg max-w-sm w-full ${theme === "dark" ? "bg-slate-900" : "bg-white"}`}>
+                        <h2 className={`text-xl font-semibold mb-4 text-center ${theme === "dark" ? "text-white" : "text-black"}`}>NEW NOTE</h2>
                         <form onSubmit={handleSubmit}>
                             <label className="block mb-2">
 

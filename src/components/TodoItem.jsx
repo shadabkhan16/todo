@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleTodo, removeTodo, updateTodo } from "../redux/todoSlice";
 import { GoPencil } from "react-icons/go";
 import { MdDelete } from "react-icons/md";
@@ -9,6 +9,7 @@ const TodoItem = ({ note }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editValue, setEditValue] = useState(note.title); // Local state to hold the new title
     const dispatch = useDispatch();
+    const theme = useSelector((state) => state.theme.theme);
 
     const handleToggle = () => {
         dispatch(toggleTodo(note.id));  // Toggle isDone
@@ -51,7 +52,7 @@ const TodoItem = ({ note }) => {
                         className="text-lg font-bold border border-gray-300 rounded px-2 py-1"
                     />
                 ) : (
-                    <span className={`${note.isDone ? 'line-through text-gray-500' : 'text-black'} text-lg font-bold`}>
+                    <span className={`${note.isDone ? 'line-through text-gray-500' : 'text-black'} text-lg font-bold ${theme === "dark" ? "text-white" : "text-black"}`}>
                         {note.title}
                     </span>
                 )}

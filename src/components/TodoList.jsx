@@ -6,6 +6,8 @@ import TodoItem from './TodoItem';
 import { useDispatch, useSelector } from 'react-redux';
 import notfound from "../assets/notfound.png"
 import { setSearchQuery, setFilter } from '../redux/todoSlice';
+import { toggleTheme } from '../redux/themeSlice';
+import { WiDaySunny } from "react-icons/wi";
 
 const TodoList = () => {
     const [task, setTask] = useState('');
@@ -17,7 +19,19 @@ const TodoList = () => {
     const searchQuery = useSelector((state) => state.todo.searchQuery)
     const dropDownFilter = useSelector((state) => state.todo.dropDownFilter)
 
+    const theme = useSelector((state) => state.theme.theme);
 
+
+    const handleThemeToggle = () => {
+        dispatch(toggleTheme());
+    };
+
+    // Update Tailwind's dark mode class
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
 
 
     const handleChange = (event) => {
@@ -54,8 +68,8 @@ const TodoList = () => {
 
 
     return (
-        <div className="  min-h-screen bg-white p-6 rounded-lg shadow-lg w-3/4 mx-auto relative">
-            <h1 className="text-center text-4xl font-serif mt-10 mb-5">Todo List</h1>
+        <div className="  min-h-screen bg-white p-6 rounded-lg shadow-lg w-3/4 mx-auto relative dark:bg-gray-800 ">
+            <h1 className="text-center text-4xl font-serif mt-10 mb-5 dark:text-white">Todo List</h1>
             <div className="w-full ">
                 <div className="flex  items-center">
                     <input
@@ -84,10 +98,14 @@ const TodoList = () => {
                             <option value="Incomplete">Incomplete</option>
                         </select>
                     </div>
-                    <button className="bg-blue-800 text-white ml-5 px-4 py-3 rounded-md">
-                        <BsMoon />
-
-                    </button>
+                    {
+                        theme === "dark" ? <button onClick={handleThemeToggle} className="bg-blue-800 text-white ml-5 px-4 py-3 rounded-md">
+                            <WiDaySunny />
+                        </button> :
+                            <button onClick={handleThemeToggle} className="bg-blue-800 text-white ml-5 px-4 py-3 rounded-md">
+                                <BsMoon />
+                            </button>
+                    }
                 </div>
             </div>
             <AddTodo />
